@@ -25,31 +25,29 @@ class MessageSenderImplTest {
 
     @Test
     void testSendRu() {
-        Map<String, String> headers = new HashMap<String, String>();
+        Map<String, String> headers = new HashMap<>();
         Location location = new Location("Н", Country.RUSSIA, null, 0);
         String ip = "172.";
-        String msg = "сообщение";
 
         headers.put(MessageSenderImpl.IP_ADDRESS_HEADER, ip);
 
         Mockito.when(geoServiceImpl.byIp(ip)).thenReturn(location);
-        Mockito.when(localizationServiceImpl.locale(location.getCountry())).thenReturn(msg);
+        Mockito.when(localizationServiceImpl.locale(location.getCountry())).thenReturn("Добро пожаловать");
 
-        Assertions.assertEquals("сообщение", messageSenderImpl.send(headers));
+        Assertions.assertEquals("Добро пожаловать", messageSenderImpl.send(headers));
     }
 
     @Test
     void testSendEng() {
-        Map<String, String> headers = new HashMap<String, String>();
+        Map<String, String> headers = new HashMap<>();
         Location location = new Location("N", Country.USA, null, 0);
         String ip = "96.";
-        String msg = "message";
 
         headers.put(MessageSenderImpl.IP_ADDRESS_HEADER, ip);
 
         Mockito.when(geoServiceImpl.byIp(ip)).thenReturn(location);
-        Mockito.when(localizationServiceImpl.locale(location.getCountry())).thenReturn(msg);
+        Mockito.when(localizationServiceImpl.locale(location.getCountry())).thenReturn("Welcome");
 
-        Assertions.assertEquals("message", messageSenderImpl.send(headers));
+        Assertions.assertEquals("Welcome", messageSenderImpl.send(headers));
     }
 }
